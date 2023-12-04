@@ -1,6 +1,5 @@
 <?php
 //set_time_limit(300);
-
 // Your database credentials
 $servername = "localhost";
 $username = "root";
@@ -16,8 +15,8 @@ if ($conn->connect_error) {
 }
 
 // for crawling
-$start = "https://google.com";
-
+$start = $_GET['url'];
+$depth = $_GET['depth'];
 $alreadycrawled = array();
 $crawling = array();
 
@@ -134,7 +133,7 @@ function follow_links($url , $depth = 0){
         else if (substr($l, 0, 5) != "https" && substr($l, 0, 4) != "http"){
             parse_url($url)["scheme"]."://".parse_url($url)["host"]."/".$l;
         }
-        // for now depth limit is set to 5
+        // for now max depth limit is set to 5
         if (in_array($url, $alreadycrawled) || $depth > 5) {
             return;
         }
@@ -154,6 +153,11 @@ function follow_links($url , $depth = 0){
     foreach($crawling as $site){
         follow_links($site, $depth+1);
     }
+
+
+
+    header('Location: index.php');
+    exit();
 }
 
 // for search module
@@ -172,26 +176,9 @@ function search_content($content, $url) {
     }
 }
 
-
 // start crawling
-follow_links($start);
+follow_links($start, $depth);
 
-
-// Fetch data from the database
-$sql = "SELECT * FROM crawler_data";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Search for the query in the content
-        search_content($row['description'], $row['url']);
-        search_content($row['keywords'], $row['url']);
-        search_content($row['title'], $row['url']);
-        // You can extend this to search in other content as needed
-    }
-} else {
-    echo "No results found";
-}
 // Close the database connection
 $conn->close();
 ?>

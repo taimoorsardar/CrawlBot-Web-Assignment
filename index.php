@@ -22,7 +22,39 @@ if ($conn->connect_error) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Crawler</title>
     <style>
-        /* Add your CSS styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 300px;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -32,6 +64,8 @@ if ($conn->connect_error) {
     <form action="crawler.php" method="GET">
         <label for="url">Enter URL to Crawl:</label>
         <input type="url" id="url" name="url" required>
+        <label for="depth">Enter Depth:</label>
+        <input type="text" name="depth" id="depth" required>
         <button type="submit">Crawl</button>
     </form>
 
