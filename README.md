@@ -81,10 +81,3 @@ Feel free to customize the code to suit your needs. You can modify the HTML/CSS 
 ## Known Issues
 - 
 - The maximum depth limit is hardcoded to 5 in the crawling logic.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Feel free to add or modify any sections based on additional information or features you want to highlight.
