@@ -16,12 +16,13 @@ This PHP-based web crawler is designed to crawl websites, extract information fr
 1. Open `index.php` in a web browser.
 2. Enter the starting URL and depth in the provided form.
 3. Click the "Crawl" button to initiate the crawling process.
+4. **if you want to crawl something again, please press "alt + BACKKEY". This will take you back to `index.php`.**
 
 ### Search
 1. Open `index.php` in a web browser.
 2. Enter the search query in the provided form.
 3. Click the "Search" button to find pages containing the specified content.
-
+4. **if you want to search something again, please press "alt + BACKKEY". This will take you back to `index.php`.**
 --- 
 
 This section provides a high-level overview of the web crawler's functionality. You can adapt and expand this explanation based on additional features or improvements you make to the crawler.
@@ -50,7 +51,9 @@ The web crawler is a PHP-based tool designed to systematically navigate through 
    - It normalizes and validates each URL to ensure consistency in the crawling process.
 
 5. **Data Storage:**
-   - Extracted information, including the title, description, keywords, and URL, is inserted into the MySQL database using SQL queries.
+   - Extracted information, including the title, description, keywords, and URL, is inserted into the MySQL database using SQL queries. 
+   - Some crawled data is already stored there.
+   - For reference, the sql database is also attached.
 
 6. **Depth Limit:**
    - The crawling process continues until the specified depth is reached or until all available links have been explored.
@@ -58,7 +61,8 @@ The web crawler is a PHP-based tool designed to systematically navigate through 
 
 7. **Search Module:**
    - The `index.php` file also provides a search form where users can enter a search query.
-   - The crawler, during its traversal, checks for the presence of the search query in the content of the pages. Matches are displayed to the user.
+   - The crawler, during its traversal, checks for the presence of the search query in the database. Matches are displayed to the user.
+   - After the at please press "ALT + LEFT KEY" to go back to index.php
 
 8. **Error Handling:**
    - Basic error handling is implemented, such as checking for a successful database connection and handling SQL query errors.
@@ -69,15 +73,13 @@ The web crawler is a PHP-based tool designed to systematically navigate through 
 
 10. **User Interface:**
    - The user interface can be customized by modifying the HTML and CSS in the `index.php` file.
-
-11. **Known Issues:**
-   - The README file highlights known issues, including incomplete error handling and depth being hardcoded.
-
 ---
+## Robots.txt Compliance
 
-## Customization
-Feel free to customize the code to suit your needs. You can modify the HTML/CSS for the user interface, adjust the depth limit, or enhance the error handling.
+This web crawler adheres to the rules specified in the `robots.txt` file of each crawled website. The `robots.txt` file is a standard used by websites to communicate with web crawlers and other automated agents, providing guidelines on which parts of the site should not be crawled.
 
-## Known Issues
-- 
-- The maximum depth limit is hardcoded to 5 in the crawling logic.
+### Implementation Details
+
+The `crawler.php` file includes a function, `getDisallowedLinksFromRobotsTxt($url)`, responsible for fetching and parsing the `robots.txt` file for a given URL. This function extracts disallowed links and ensures that the web crawler respects the rules defined by the website.
+
+The implementation uses cURL to fetch the content of the `robots.txt` file and parses it to identify disallowed links. These links are then excluded from the crawling process to maintain compliance with the website's guidelines.
